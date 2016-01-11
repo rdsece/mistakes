@@ -1,0 +1,29 @@
+#!/bin/bash
+echo
+echo
+wget www.cisco.com
+echo
+cat index index.html |grep "href=" |cut -d"/" -f3
+echo
+cat index index.html |grep "href=" |cut -d"/" -f3 |grep "cisco.com"
+echo 
+cat index index.html |grep "href=" |cut -d"/" -f3 |grep "cisco.com" |cut -d'"' -f1 |more
+echo
+echo
+cat index index.html |grep "href=" |cut -d"/" -f3 |grep "cisco.com" |cut -d'"' -f1 |sort -u
+echo
+echo
+grep -o '[A-Za-z0-9_\.-]*\.*cisco.com'index.html |sort -u >cisco.txt
+echo
+echo
+host www.cisco.com
+echo
+host www.cisco.com |grep "has address" |cut -d " " -f4
+echo
+echo
+for url in $(cat cisco.txt);do
+host $url |grep "has address" |cut -d" " -f4
+done
+echo
+#final code that can be used for other websites. 
+for url in $(grep -o '[A-Za-z0-9_\.-]*\.*cisco.com' index.html |sort -u); do host $url|grep "has address" |cut -d" " -f4;done
